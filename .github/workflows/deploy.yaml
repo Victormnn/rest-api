@@ -45,6 +45,6 @@ jobs:
         with:
           push: true
         # file: ./path-to-dockerfile
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.RELEASE_VERSION }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           build-args: |
             APP_ENV=${{ secrets.APP_ENV }}
