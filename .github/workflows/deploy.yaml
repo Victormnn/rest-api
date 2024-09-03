@@ -14,7 +14,7 @@ jobs:
 
   build:
 
-    name: Construir Imagen
+    name: build
     runs-on: ubuntu-latest
 
 
