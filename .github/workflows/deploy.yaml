@@ -43,7 +43,7 @@ jobs:
   test:
     name: Run tests
     needs: build
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Run Test  
@@ -53,3 +53,10 @@ jobs:
 
       - run: npm install
       - run: npm run test
+      - name: Test succeded?
+        if: ${{ success() }}
+        run: echo "Test Succeded!!!"
+      - name: Test failed?
+        if: ${{ failure() }}
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"${{ env.IMAGE_NAME }} test failed"}' ${{ secrets.SLACK_WEBHOOK_URL }}
