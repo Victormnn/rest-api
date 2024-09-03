@@ -41,7 +41,7 @@ jobs:
           build-args: |
             APP_ENV=${{ secrets.APP_ENV }}
   test:
-    name: Run tests
+    name: Run testss
     needs: build
     runs-on: ubuntu-latest
     steps:
