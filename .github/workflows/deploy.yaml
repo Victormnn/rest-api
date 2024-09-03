@@ -41,7 +41,7 @@ jobs:
           build-args: |
             APP_ENV=${{ secrets.APP_ENV }}
   test:
-    name: Run testss
+    name: Run tests
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -60,3 +60,21 @@ jobs:
         if: ${{ failure() }}
         run: |
           curl -X POST -H 'Content-type: application/json' --data '{"text":"${{ env.IMAGE_NAME }} test failed"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  CodeScan:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+        with:
+        # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master # Ex: v2.1.0, See the latest version at https://github.com/marketplace/actions/sonarcloud-scan
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: >
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
