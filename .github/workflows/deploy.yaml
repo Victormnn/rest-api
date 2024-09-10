@@ -2,7 +2,7 @@ name: deploy
 
 on:
   push:
-    branches: [ "main-Nonexecute" ]
+    branches: [ "main-Nonexecute1" ]
 
 env:
   REGISTRY: nogueranv
